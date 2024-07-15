@@ -4,6 +4,14 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Models\Agencija;
+use App\Http\Controllers\AgencijaController;
+
+
+
+
+use Illuminate\Http\Request;
+
+
 
 class AranzmanResource extends JsonResource
 {
@@ -17,20 +25,33 @@ class AranzmanResource extends JsonResource
     {
 
 
-        $agencijaData = Agencija::find($this->resource->agencija_id); 
+   
+        $id = $this->resource->agencija_id; //RADI
+        
+        //$agencijaData = Agencija::find($id); 
+//      $agencijaData = $this->whenLoaded('agencija'); // Ensure 'agencija' relationship is loaded
+        $agencijaData = Agencija::get()->where('id',$id);
 
-        return [
+
+
+       return [
             'id'=>$this->resource->id,
             'cena'=>$this->resource->cena,
             'br_mesta'=>$this->resource->br_mesta,
             'datum'=>$this->resource->datum,
             'prevoz'=>$this->resource->prevoz,
-            
-        
-          //  'agencija'=>new AgencijaResource($this->resource->agencija),  //relationship method!!
-            
-          'agencija'=>new AgencijaResource($agencijaData),
-          'user'=>new UserResource($this->resource->user)
+            'destinacija'=>$this->resource->destinacija,
+            'picture'=>$this->resource->picture,
+  //         'agencija'=>new AgencijaResource($this->resource->agencija),  //relationship method!!
+    
+     //       'agencija' => new AgencijaResource($agencijaData),
+       //    'agencija'=>new AgencijaResource($this->resource->turisticka_agencija),
+      //           'agencija' => new AgencijaResource($this->resource->turisticka_agencija),
+       //     'agencija'=> new AgencijaResource($this->resource->agencijaData),
+               //'agencija' => agencijaData,
+               'user'=>new UserResource($this->resource->user),
+   //       'xes'=> Agencija::find($id),
+    //       'a_id'=> $id  //RADI
           ];
     }
 

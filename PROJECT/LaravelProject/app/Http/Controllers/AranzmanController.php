@@ -38,6 +38,7 @@ class AranzmanController extends Controller
 
 
         $aranzmani = $user->aranzmani;
+      //  $aranzmani->agencija = $user->agencija;
         return AranzmanResource::collection($aranzmani);
       
      

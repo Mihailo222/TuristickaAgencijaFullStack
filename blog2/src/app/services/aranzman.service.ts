@@ -14,4 +14,10 @@ export class AranzmanService {
 
     return this.http.get(`${this.url}/aranzmani`);
   }
+
+
+  getAranzmaniUser():Observable<any>{
+    return this.http.get(`${this.url}/moji_aranzmani`);
+  }
+
 }

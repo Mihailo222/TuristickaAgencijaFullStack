@@ -39,11 +39,16 @@ export class LoginComponent {
     if(this.loginForm.valid){
       
       this.authService.login(this.loginForm.value).subscribe(
-        res => (localStorage.setItem('token',res.access_token)) //super praksa da stavimo access token u local storage kad se user loguje, pa da ga brisemo iz local storrage-a kad se on unloguje
-      );
+        res => {
+        
+        localStorage.setItem('token',res.access_token); //super praksa da stavimo access token u local storage kad se user loguje, pa da ga brisemo iz local storrage-a kad se on unloguje
+        this.router.navigate(['/profile']); 
+     
+    });
       //this.router.navigate(['profile']); 
       console.log("logged in.");
       console.log(localStorage.getItem('token')); //ispisi mi access token iz local storrage-a
+     
     }else{
       console.log("not logged in");
     }

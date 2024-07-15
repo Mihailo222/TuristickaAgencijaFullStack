@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AranzmanService } from '../services/aranzman.service';
 import { Aranzman } from '../models/aranzman';
+import { Router } from '@angular/router';
+import { ShareService } from '../services/shared/share.service';
 
 @Component({
   selector: 'app-aranzman',
@@ -9,10 +11,13 @@ import { Aranzman } from '../models/aranzman';
 })
 export class AranzmanComponent implements OnInit {
 
+//@Input() aranzmani: Aranzman[]=[];
 aranzmani: Aranzman[] = [];
 
+buttonClick=true;
 
-constructor(private aranzmanService: AranzmanService){}
+@Input() aranzman: Aranzman;
+constructor(private aranzmanService: AranzmanService, private router:Router, private shareService:ShareService){}
 
 //u vreme incijializacije stranice
 ngOnInit(){
@@ -35,17 +40,38 @@ fetchAranzmani(): void {
   },
   (error) => {
     console.log("Error fetching aranzmani:",error);
+  });
+}
+
+
+onAddToCart(aranzman:Aranzman) {
+
+  if(!localStorage.getItem('token')){
+    this.router.navigate(['/login']); 
+    return;
   }
 
 
+  if(aranzman.br_mesta > 0){
+    //console.log(aranzman);
+    aranzman.br_mesta--;
+    this.shareService.setAranzman(aranzman);
+    this.router.navigate(['/profile']); 
 
-  );
+  }
 
-
-
-
+  for( const a of this.aranzmani){
+    console.log(a);
+  }
 }
 
+onRemoveFromCart(aranzman:Aranzman) {
+  aranzman.br_mesta++;
+
+  for( const a of this.aranzmani){
+    console.log(a);
+  }
+}
 
 
 

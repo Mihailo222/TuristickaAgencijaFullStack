@@ -13,7 +13,7 @@ class Aranzman extends Model
     public $table='aranzman';
 
     protected $fillable = [
-       'id', 'cena',	'br_mesta',	'datum','prevoz', 'user_id', 'destinacija', 'agencija_id',
+       'id', 'cena',	'br_mesta',	'datum','prevoz', 'user_id', 'destinacija', 'agencija_id','picture'
     ];
 
 

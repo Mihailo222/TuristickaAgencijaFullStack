@@ -16,7 +16,12 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RegisterComponent } from './register/register.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AuthGuard } from './auth.guard';
+import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+
+
 
 @NgModule({
   declarations: [
@@ -37,12 +42,16 @@ import { ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
     MatToolbarModule,
     ReactiveFormsModule,
+    RouterModule,
+    CommonModule,
+    FormsModule
   ],
   providers: [
     provideAnimationsAsync(),
     {
       provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi:true,
     },
+    AuthGuard,//jako bitno dodati ga samo ovde
   ],
   bootstrap: [AppComponent]
 })
