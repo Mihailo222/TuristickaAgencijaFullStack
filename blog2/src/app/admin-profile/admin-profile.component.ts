@@ -3,6 +3,8 @@ import { AuthService } from '../services/auth.service';
 import {  Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user';
+import { AranzmanService } from '../services/aranzman.service';
+import { Aranzman } from '../models/aranzman';
 
 @Component({
   selector: 'app-admin-profile',
@@ -12,14 +14,18 @@ import { User } from '../models/user';
 export class AdminProfileComponent {
 
 
-constructor(private authService: AuthService, private router:Router, private userService: UserService){}
+constructor(private authService: AuthService, private router:Router, private userService: UserService, private aranzmanService: AranzmanService){}
 userData:any;
 users:User[];
+
+aranzmani: Aranzman[]=[];
+
 
 ngOnInit(): void{
 
   this.getUserInfo();
   this.getUsers();
+  this.getAllAranzmani();
   
 
  
@@ -66,6 +72,16 @@ deleteUser(user:User){
 
 }
 
+
+getAllAranzmani(){
+  this.aranzmanService.getAranzmani().subscribe(
+
+    (res) => {
+      
+      this.aranzmani=res;
+      console.log(res);}
+  )
+}
 
 
 

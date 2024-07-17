@@ -14,6 +14,9 @@ use App\Http\Resources\AgencijaResource;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\Rules\Password;
+
 
 class AranzmanController extends Controller
 {
@@ -77,21 +80,15 @@ class AranzmanController extends Controller
             'destinacija' => 'required|string|max:100',
             'cena' => 'required',
             'br_mesta' => 'required',
-      //      'agencija_id' => 'required',
             'datum' => 'required',
+            'picture' => 'required',
+
         ]);
     
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
         }
-    
-        // Retrieve the authenticated user
-  //      $user = Auth::user();
-    
-        // Check if the user ID is available
-   //     if (!$user || !$user->id) {
-    //        return response()->json(['error' => 'User ID not available'], 400);
-     //   }
+
     
         try {
             $aranzman = Aranzman::create([
@@ -100,9 +97,8 @@ class AranzmanController extends Controller
                 'cena' => $request->cena,
                 'br_mesta' => $request->br_mesta,
                 'datum' => $request->datum,
-        //        'agencija_id' => $request->agencija_id,
-        //        'user_id' => $user->id,
-                
+                'picture' => $request->picture,
+
             ]);
     
             return response()->json(['Aranzman uspesno kreiran.', new AranzmanResource($aranzman)]);
@@ -140,10 +136,35 @@ class AranzmanController extends Controller
      * @param  \App\Models\Aranzman  $aranzman
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Aranzman $aranzman)
+    public function update(Request $request,Aranzman $aranzman): JsonResponse
     {
-        //
-    }
+             // Validacija
+             $request->validate([
+                'prevoz' => 'required|string|max:100',
+                'destinacija' => 'required|string|max:100',
+                'cena' => 'required',
+                'br_mesta' => 'required',
+                'datum' => 'required',
+                'picture' => 'required',
+            ]);
+
+
+
+    
+            try {
+                
+               // $user = User::findOrFail($user->id);
+    
+                
+                $aranzman->update($request->all());
+    
+              
+                return response()->json(['message' => 'Aranzman izmenjena.', 'data' => $aranzman], 200);
+            } catch (\Exception $e) {
+                  //npr. ako ne postoji resurs sa datim ID-jem
+                return response()->json(['message' => 'Neuspesna izmena aranzmana.', 'error' => $e->getMessage()], 500);
+            }
+        }
 
     /**
      * Remove the specified resource from storage.
@@ -151,9 +172,15 @@ class AranzmanController extends Controller
      * @param  \App\Models\Aranzman  $aranzman
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Aranzman $aranzman)
+    public function destroy($id): JsonResponse
     {
-
-
+        
+    try {
+        $aranzman = Aranzman::findOrFail($id);
+        $aranzman->delete();
+        return response()->json(['message' => 'Aranzman uspešno obrisan.'], 200);
+    } catch (\Exception $e) {
+        return response()->json(['message' => 'Greška prilikom brisanja aranzmana.', 'error' => $e->getMessage()], 500);
+    }
     }
 }

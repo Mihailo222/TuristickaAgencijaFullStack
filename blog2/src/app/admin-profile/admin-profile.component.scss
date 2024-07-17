@@ -35,13 +35,13 @@
 
 
     background-image: url(../../assets/images/admin_bck.jpg);
-    background-size: cover; /* Cover the entire viewport */
+   // background-size: cover; /* Cover the entire viewport */
     
-    background-position: center; /* Center the background image */
+    //background-position: center; /* Center the background image */
     height: 100vh; /* Ensure the background covers the entire viewport height */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+   // background-size: cover;
+   // background-position: center;
+   // background-repeat: no-repeat;
     opacity: 0.9;
     padding: 20px;
   }
@@ -71,7 +71,7 @@
   .container {
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: flex;
     padding-top: 50px;
   }
   
