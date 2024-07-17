@@ -68,7 +68,7 @@ Route::put('aranzmani/{id}',[AranzmanController::class,'update']); //update aran
 Route::delete('obrisi_aranzman/{id}', [AranzmanController::class, 'destroy']);//obrisi aranzman
 
 //rad nad putovanjima??? -> rezervacija
-
+//post, delete - pa udjes kao admin umesto usera i obezbedis preko njegovog profila post putovanja sa njegovim kredencijalima
 
 
 
@@ -78,8 +78,6 @@ Route::delete('obrisi_aranzman/{id}', [AranzmanController::class, 'destroy']);//
 //Route::put('azuriraj_agenciju/{id}', [AgencijaController::class, 'update']);
 //Route::post('sacuvaj_agenciju', [AgencijaController::class, 'store']);
 //npr neka admin brise agenciju ovde takodje 
-
-
 });
 
 
