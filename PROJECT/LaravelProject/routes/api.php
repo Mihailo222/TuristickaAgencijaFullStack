@@ -8,6 +8,10 @@ use App\Http\Controllers\AranzmanController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\ChatGptController;
 use App\Http\Controllers\BrosuraController;
+use App\Http\Controllers\PutovanjeController;
+use Illuminate\Http\JsonResponse; // Ensure this import is correct
+
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -28,9 +32,9 @@ use App\Http\Controllers\BrosuraController;
 //NEULOGOVANI KORISNIK SME DA VIDI SAMO AGENCIJE KOJE VRSE USLUGE
 //mozda mi je najbolje da admin moze da azurira sve agencije i da ih cuva
 
-
-Route::resource('/agencije', AgencijaController::class); //resource ruta svih agencija koje usluzuju
-Route::get('agencija/{id}', [AgencijaController::class,'show']); // resource ruta neke agencije
+Route::resource('/putovanja', PutovanjeController::class); //resource ruta svih agencija koje usluzuju
+//Route::resource('/agencije', AgencijaController::class); //resource ruta svih agencija koje usluzuju
+//Route::get('agencija/{id}', [AgencijaController::class,'show']); // resource ruta neke agencije
 
 //vrati bukvalno sve aranzmane
 Route::get('/aranzmani',[AranzmanController::class,'indexAll']);
@@ -46,17 +50,26 @@ Route::post('sacuvaj_agenciju', [AgencijaController::class, 'store']);
 Route::put('azuriraj_agenciju/{id}', [AgencijaController::class, 'update']);
 Route::delete('obrisi_agenciju/{id}', [AgencijaController::class, 'destroy']);
 
+
 //ADMIN
 Route::group(['middleware'=>['auth:sanctum', 'admin']], function () {
 
 //hocu da samo admin sme da vidi sve usere
 Route::resource('/users', UserController::class); //resource ruta svih usera koje usluzuju
-
+Route::delete('obrisi_usera/{id}', [UserController::class, 'destroy']);
 Route::get('user/{id}', [UserController::class, 'show']); // resource ruta nekog usera
-//azuriranje i cuvanje agencija sme da vrsi samo admin
-//Route::put('azuriraj_agenciju/{id}', [AgencijaController::class, 'update']);
+Route::put('users/{id}',[UserController::class, 'update']);
+
+
+
+
+
+Route::put('azuriraj_agenciju/{id}', [AgencijaController::class, 'update']);
 //Route::post('sacuvaj_agenciju', [AgencijaController::class, 'store']);
 //npr neka admin brise agenciju ovde takodje 
+
+Route::post('aranzmani', [AranzmanController::class, 'store']);
+
 });
 
 
@@ -64,18 +77,14 @@ Route::get('user/{id}', [UserController::class, 'show']); // resource ruta nekog
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
-    //1. profil usera
     Route::get('/profile', function(Request $request) {
         return auth()->user();
     });
-    //2. vraca aranzmane samo ulogovanog usera
-    Route::get('moji_aranzmani',[AranzmanController::class,'index']); //redirect na login putanju neulogovanog usera!! 
-    
-    //3. mogucnost zakazivanja novog aranzmana
-   Route::post('aranzmani', [AranzmanController::class, 'store']);
+    Route::get('moja_putovanja',[PutovanjeController::class, 'getAllUser']); //redirect na login putanju neulogovanog usera!! 
+    Route::post('sacuvaj_putovanje',[PutovanjeController::class,'storePutovanje']);
+    Route::delete('obrisi_putovanje/{id}', [PutovanjeController::class, 'destroy']);
 
-    //4. logout usera
     Route::post('/logout', [AuthController::class, 'logout']);
 
-    //fali mi destroy necega...
+
     });

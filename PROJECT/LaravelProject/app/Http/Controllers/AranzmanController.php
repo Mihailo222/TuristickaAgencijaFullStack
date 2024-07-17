@@ -22,23 +22,14 @@ class AranzmanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     //ne vidim poentu ove metode
     public function index()
     {
    
- //       $user = Auth::user();
-  //  $aranzmani = $user->aranzmani(); //->paginate(10);
-
-  //  return AranzmanResource::collection($aranzmani);
-
-
-
-
         $user = Auth::user();
 
-
-
         $aranzmani = $user->aranzmani;
-      //  $aranzmani->agencija = $user->agencija;
         return AranzmanResource::collection($aranzmani);
       
      
@@ -47,6 +38,7 @@ class AranzmanController extends Controller
 
 
 
+    //metoda vraca sve aranzmane
     public function indexAll()//vracanje svih aranzmana
     {
         $aranzmani=Aranzman::all();
@@ -72,6 +64,8 @@ class AranzmanController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+     //metoda koja cuva novi aranzman
     public function store(Request $request)
     { // Check if the user is authenticated
         if (!Auth::check()) {
@@ -83,7 +77,7 @@ class AranzmanController extends Controller
             'destinacija' => 'required|string|max:100',
             'cena' => 'required',
             'br_mesta' => 'required',
-            'agencija_id' => 'required',
+      //      'agencija_id' => 'required',
             'datum' => 'required',
         ]);
     
@@ -92,12 +86,12 @@ class AranzmanController extends Controller
         }
     
         // Retrieve the authenticated user
-        $user = Auth::user();
+  //      $user = Auth::user();
     
         // Check if the user ID is available
-        if (!$user || !$user->id) {
-            return response()->json(['error' => 'User ID not available'], 400);
-        }
+   //     if (!$user || !$user->id) {
+    //        return response()->json(['error' => 'User ID not available'], 400);
+     //   }
     
         try {
             $aranzman = Aranzman::create([
@@ -106,12 +100,13 @@ class AranzmanController extends Controller
                 'cena' => $request->cena,
                 'br_mesta' => $request->br_mesta,
                 'datum' => $request->datum,
-                'agencija_id' => $request->agencija_id,
-                'user_id' => $user->id,
+        //        'agencija_id' => $request->agencija_id,
+        //        'user_id' => $user->id,
+                
             ]);
     
             return response()->json(['Aranzman uspesno kreiran.', new AranzmanResource($aranzman)]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }

@@ -20,6 +20,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthGuard } from './auth.guard';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AdminProfileComponent } from './admin-profile/admin-profile.component';
+import { UserEditingComponent } from './user-editing/user-editing.component';
 
 
 
@@ -33,7 +35,9 @@ import { CommonModule } from '@angular/common';
     NavbarComponent,
     HomeComponent,
     ProfileComponent,
-    RegisterComponent
+    RegisterComponent,
+    AdminProfileComponent,
+    UserEditingComponent
   ],
   imports: [
     BrowserModule,

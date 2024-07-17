@@ -30,7 +30,7 @@ class AranzmanResource extends JsonResource
         
         //$agencijaData = Agencija::find($id); 
 //      $agencijaData = $this->whenLoaded('agencija'); // Ensure 'agencija' relationship is loaded
-        $agencijaData = Agencija::get()->where('id',$id);
+     //   $agencijaData = Agencija::get()->where('id',$id);
 
 
 
@@ -49,7 +49,7 @@ class AranzmanResource extends JsonResource
       //           'agencija' => new AgencijaResource($this->resource->turisticka_agencija),
        //     'agencija'=> new AgencijaResource($this->resource->agencijaData),
                //'agencija' => agencijaData,
-               'user'=>new UserResource($this->resource->user),
+     //          'user'=>new UserResource($this->resource->user),
    //       'xes'=> Agencija::find($id),
     //       'a_id'=> $id  //RADI
           ];

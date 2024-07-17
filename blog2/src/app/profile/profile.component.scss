@@ -186,3 +186,12 @@
     letter-spacing: 1px; /* Adjust letter spacing as needed */
   }
   
+
+  .back {
+    background-image: url('../../assets/images/background_profile.jpg'); /* Replace with your image path */
+    background-size: cover; /* Cover the entire container with the background image */
+    background-position: center; /* Center the background image */
+    background-repeat: no-repeat; /* Prevent the background image from repeating */
+    opacity: 0.9; /* Adjust opacity as needed for transparency */
+    padding: 20px; /* Adjust padding as needed */
+  }

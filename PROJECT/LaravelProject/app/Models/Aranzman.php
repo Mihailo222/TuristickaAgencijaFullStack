@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class Aranzman extends Model
 {
     use HasFactory;
@@ -13,17 +14,11 @@ class Aranzman extends Model
     public $table='aranzman';
 
     protected $fillable = [
-       'id', 'cena',	'br_mesta',	'datum','prevoz', 'user_id', 'destinacija', 'agencija_id','picture'
+       'id', 'cena',	'br_mesta',	'datum','prevoz', 'destinacija','picture'
     ];
 
 
-
-    public function turisticka_agencija() {
-        return $this->belongsTo(Agencija::class);
-    }
-    
-    
-    public function user() {
-        return $this->belongsTo(User::class);
+    public function putovanja() {
+        return $this->hasMany(Putovanje::class);
     }
 }

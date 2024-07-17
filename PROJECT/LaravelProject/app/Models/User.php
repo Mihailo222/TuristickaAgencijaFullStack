@@ -49,8 +49,8 @@ class User extends Authenticatable
 
    
 
-    public function aranzmani() {
-        return $this->hasMany(Aranzman::class);
+    public function putovanja() {
+        return $this->hasMany(Putovanje::class);
     }
 
 

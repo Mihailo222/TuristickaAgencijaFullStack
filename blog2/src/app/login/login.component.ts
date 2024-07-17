@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { Route, Router } from '@angular/router';
+import { ShareService } from '../services/shared/share.service';
 
 @Component({
   selector: 'app-login',
@@ -11,8 +12,9 @@ import { Route, Router } from '@angular/router';
 export class LoginComponent {
 
   loginForm:FormGroup;
+  UserID: number;
 
-  constructor(private fb:FormBuilder, private authService:AuthService, private router:Router){}
+  constructor(private fb:FormBuilder, private authService:AuthService, private router:Router,private sharedService: ShareService){}
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -42,6 +44,10 @@ export class LoginComponent {
         res => {
         
         localStorage.setItem('token',res.access_token); //super praksa da stavimo access token u local storage kad se user loguje, pa da ga brisemo iz local storrage-a kad se on unloguje
+        console.log("THIS IS RES",res);
+        this.sharedService.setUID(res.id);
+        this.sharedService.userRole=res.user_role; 
+
         this.router.navigate(['/profile']); 
      
     });

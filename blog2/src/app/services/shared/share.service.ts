@@ -7,7 +7,12 @@ import { Aranzman } from '../../models/aranzman';
 export class ShareService {
 
   aranzmani:Aranzman[]=[];
+  userID:number;
+ userRole:string;
+
+
   constructor() { }
+
   setAranzman(data:Aranzman){
     this.aranzmani.push(data);
   }
@@ -15,4 +20,15 @@ export class ShareService {
   getAranzman(){
     return this.aranzmani;
   }
+
+  setUID(num:number){
+    this.userID=num;
+  }
+
+  getUID(){
+    return this.userID;
+  }
+
+  
+  
 }
